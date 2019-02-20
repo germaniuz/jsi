@@ -3,7 +3,7 @@
     "esversion": "6"
   },
   "devDependencies": {
-    "eslint": "^5.14.0",
+    "eslint": "^5.14.1",
     "jshint": "^2.10.1"
   }
 }

@@ -7,7 +7,7 @@ const cartWrapper = document.querySelector('.cart__wrapper'),
     goodsBtn = document.querySelectorAll('.goods__btn'),
     products = document.querySelectorAll('.goods__item'),
     confirm = document.querySelector('.confirm'),
-    badge = document.querySelector('.nav_badge'),
+    badge = document.querySelector('.nav__badge'),
     totalCost = document.querySelector('.cart__total > span'),
     titles = document.querySelectorAll('.goods__title');
 
@@ -37,7 +37,54 @@ goodsBtn.forEach((btn, i) => {
         item.appendChild(removeBtn);
         cartWrapper.appendChild(item);
         (emptyText) ? emptyText.remove() : '';
+        calcGoods();
+        showConfirm();
+        calcTotal();
     });
 });
+
+function sliceTitle(arrTitles) {
+    arrTitles.forEach((item) => {
+        if (item.textContent.length < 70) {
+            return;
+        } else {
+           const str = item.textContent.slice(0, 71) + '...';
+           item.textContent = str;
+        }
+    });
+}
+
+sliceTitle(titles);
+
+function showConfirm() {
+    confirm.style.display = 'block';
+    let counter = 100;
+    const id = setInterval(frame, 10);
+
+    function frame() {
+        if (counter == 10) {
+            clearInterval(id);
+            confirm.style.display= 'none';
+        } else {
+            counter --;
+            confirm.style.transform = `translateY(-${counter}px)`;
+            confirm.style.opacity = `0.${counter}`;
+        }
+    }
+}
+
+function calcGoods() {
+    const item = cartWrapper.querySelectorAll('.goods__item');
+    badge.textContent = item.length;
+}
+
+function calcTotal() {
+    prices = document.querySelectorAll('.cart__wrapper > .goods__item > .goods__price > span');
+    let total = 0;
+    prices.forEach((item) => {
+        total += +item.textContent;
+    });
+    totalCost.textContent = total;
+}
 
 }); //DOMContentLoaded
